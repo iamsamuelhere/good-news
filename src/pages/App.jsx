@@ -9,7 +9,7 @@ import BottomNav from "../components/BottomNav";
 import Header from "../components/Header";
 export default function App() {
   const [value, setValue] = React.useState(0);
-
+  window.addEventListener('beforeinstallprompt', (event) => { console.log(event); });
   return (
     <div
       style={{
