@@ -77,7 +77,7 @@ const AddEvent = () => {
              helperText="Describe the event?"
             />
 
-           <p>Add Note to
+           <p>Add Note to: </p>
 
            <div>
              Self
@@ -87,7 +87,7 @@ const AddEvent = () => {
                  />
               Others
            </div>
-             </p>
+          
          </div>
         </DialogContent>
         <DialogActions>
