@@ -1,55 +1,32 @@
+import { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
-import Accordion from "@mui/material/Accordion";
+import Accordion from "../components/Accordion";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-const mockData = [
-  {
-    eventTitle: "Saved from an accident",
-    eventDescription: "this is the description",
-  },
-  {
-    eventTitle: "Rescued from a trap",
-    eventDescription: "this is the description",
-  },
-  {
-    eventTitle: "Saved from an accident",
-    eventDescription: "this is the description",
-  },
-  {
-    eventTitle: "Rescued from a trap",
-    eventDescription: "this is the description",
-  },
-  {
-    eventTitle: "Saved from an accident",
-    eventDescription: "this is the description",
-  },
-  {
-    eventTitle: "Rescued from a trap",
-    eventDescription: "this is the description",
-  },
-  {
-    eventTitle: "Saved from an accident",
-    eventDescription: "this is the description",
-  },
-  {
-    eventTitle: "Rescued from a trap",
-    eventDescription: "this is the description",
-  },
-  {
-    eventTitle: "Saved from an accident",
-    eventDescription: "this is the description",
-  },
-  {
-    eventTitle: "Rescued from a trap",
-    eventDescription: "this is the description",
-  },
-];
+import getEvents from "../api/getEvents";
+
+
+
 const GoodNews = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [publicEvents, setPublicEvents] = useState([]);
+  useEffect(() => {
+    setIsLoading(true);
+    getEvents("?isPublic=true")
+      .then((result) => {
+        console.log(result)
+        setPublicEvents(result?.events || []);
+      })
+      .catch()
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
   return (
     <>
-      <p style={{ textAlign: "center" }}>RECENT GOOD NEWS</p>
+      <p style={{ textAlign: "center" }}>RECENT GOOD NEWS
+       
+      </p>
 
       <Paper
         elevation={1}
@@ -60,22 +37,27 @@ const GoodNews = () => {
           overflowY: "scroll",
         }}
       >
-        {mockData.map((mock) => {
-          return (
-            <Accordion style={{ marginTop: "1em" }}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                {mock.eventTitle}
-              </AccordionSummary>
-              <AccordionDetails>
-                <p>{mock.eventDescription}</p>
-              </AccordionDetails>
-            </Accordion>
-          );
-        })}
+        {isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+
+              alignItems: "center",
+            }}
+          >
+            {" "}
+            <CircularProgress />
+          </div>
+        ) : (
+          publicEvents.map((publicEvent) => {
+            return (
+             <Accordion
+               item={publicEvent}
+               />
+            );
+          })
+        )}
       </Paper>
     </>
   );
