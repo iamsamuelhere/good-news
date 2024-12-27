@@ -14,17 +14,14 @@ const AccordionComponent = ({ item }) => {
       >
         {item?.title}
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails style={{ whiteSpace: "pre-line" }}>
         <span>{item?.description}</span>
-        <br/>
-        <br/>
+        <br />
+        <br />
 
-
-        <div style={{fontSize:"0.9rem"}}>
+        <div style={{ fontSize: "0.9rem" }}>
           <i>Event Date: {item?.recordDate}</i>
-
         </div>
-
       </AccordionDetails>
     </Accordion>
   );
