@@ -12,9 +12,9 @@ import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Typography } from "@mui/material";
-import createEvent from "../../api/createEvent";
 
+import createEvent from "../../api/createEvent";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -29,14 +29,24 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
     setOpen(false);
     const addEvent = { ...event, createdAt: new Date().toString() };
 
-    createEvent(addEvent);
-    if(!addEvent?.isPublic)
-    setPrivateEvents([...privateEvents, addEvent]);
+    createEvent(addEvent)
+      .then((response) => {
+        if (!addEvent?.isPublic) {
+          addEvent.id = response?.body?.id;
+          console.log("ADDEVENT", addEvent);
+          setPrivateEvents([...privateEvents, addEvent]);
+        }
+      })
+      .catch();
   };
 
   return (
     <div style={{ textAlign: "center" }}>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        startIcon={<AddRoundedIcon />}
+        onClick={handleClickOpen}
+      >
         Add Event
       </Button>
       <Dialog

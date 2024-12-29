@@ -4,8 +4,10 @@ import Accordion from "../components/Accordion";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import getEvents from "../api/getEvents";
-
-
+import Button from "@mui/material/Button";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteModal from "../components/modals/DeleteModal";
 
 const GoodNews = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -54,6 +56,28 @@ const GoodNews = () => {
             return (
              <Accordion
                item={publicEvent}
+               actions={
+                 <>
+                   <div style={{ display: "flex", justifyContent: "end" }}>
+                     <Button
+                       style={{ marginRight: "1em", textTransform: "none" }}
+                       size="small"
+                       variant="outlined"
+                       onClick={() => {}}
+                       startIcon={<EditIcon />}
+                     >
+                       Edit
+                     </Button>
+                     <DeleteModal
+                       events={publicEvents}
+                       setEvents={setPublicEvents}
+                       title="Confirm Delete"
+                       description={`Are you sure you want to delete the event`}
+                       content={publicEvent}
+                     />
+                   </div>
+                 </>
+               }
                />
             );
           })
