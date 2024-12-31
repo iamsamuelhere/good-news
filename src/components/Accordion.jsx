@@ -25,7 +25,9 @@ const AccordionComponent = ({ item, actions }) => {
         </div>
         <div>
           
-          {actions&&actions}
+          <div style={{margin:"1em"}}>
+            {actions&&actions}
+          </div>
         </div>
       </AccordionDetails>
     </Accordion>

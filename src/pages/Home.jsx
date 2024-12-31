@@ -7,13 +7,9 @@ import Accordion from "../components/Accordion";
 const VITE_test = import.meta.env.VITE_test;
 import getEvents from "../api/getEvents";
 
-import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
-
-
 import DeleteModal from "../components/modals/DeleteModal";
 
-
+import EditModal from "../components/modals/EditEvent";
 
 const Home = () => {
   const [event, setEvent] = useState({
@@ -86,19 +82,18 @@ const Home = () => {
           privateEvents.map((privateEvent) => {
             return (
               <Accordion
+                key={privateEvent?.id}
                 item={privateEvent}
                 actions={
                   <>
                     <div style={{ display: "flex", justifyContent: "end" }}>
-                      <Button
-                        style={{ marginRight: "1em", textTransform: "none" }}
-                        size="small"
-                        variant="outlined"
-                        onClick={() => {}}
-                        startIcon={<EditIcon />}
-                      >
-                        Edit
-                      </Button>
+                      <EditModal
+                        privateEvent={privateEvent}
+                        event={event}
+                        setEvent={setEvent}
+                        privateEvents={privateEvents}
+                        setPrivateEvents={setPrivateEvents}
+                      />
                       <DeleteModal
                         events={privateEvents}
                         setEvents={setPrivateEvents}

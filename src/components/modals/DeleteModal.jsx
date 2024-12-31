@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import removeEvent from "../../api/removeEvent";
 const DeleteModal = ({ title, description, content, events, setEvents }) => {
   const [open, setOpen] = React.useState(false);
-  console.log(events);
+
   const handleDelete = (content) => {
     const id = content?.id;
     const filteredEvents = events.filter((event) => event.id !== id);

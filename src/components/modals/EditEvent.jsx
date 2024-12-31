@@ -7,16 +7,21 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import EditIcon from "@mui/icons-material/Edit";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import Dayjs from "dayjs";
+import "dayjs/locale/en-gb";
+Dayjs.locale("en-gb");
 
-import createEvent from "../../api/createEvent";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
+import updateEvent from "../../api/updateEvent";
+const EditEvent = ({ privateEvent, privateEvents, setPrivateEvents }) => {
   const [open, setOpen] = React.useState(false);
+
+  const [editEvent, setEditEvent] = React.useState(privateEvent);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,26 +32,36 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setOpen(false);
-    const addEvent = { ...event, createdAt: new Date().toString() };
 
-    createEvent(addEvent)
-      .then((response) => {
-        if (!addEvent?.isPublic) {
-          addEvent.id = response?.body?.id;
-          console.log("ADDEVENT", addEvent);
-          setPrivateEvents([...privateEvents, addEvent]);
-        }
+    updateEvent(editEvent)
+      .then((resp) => {
+        const updatedEvents = privateEvents.map((event) => {
+          const id = privateEvent?.id;
+          if (event.id != id) {
+            return event;
+          } else {
+            console.log(id, event.id);
+            return editEvent;
+          }
+        });
+        setPrivateEvents(updatedEvents);
       })
-      .catch();
+      .catch((error) => {
+        console.error(error);
+      });
   };
+  const recordDate = editEvent?.recordDate;
+  const formattedDate = Dayjs(recordDate, "DD-MM-YYYY").format("YYYY-MM-DD");
   return (
     <div style={{ textAlign: "center" }}>
       <Button
-        variant="contained"
-        startIcon={<AddRoundedIcon />}
+        style={{ marginRight: "1em", textTransform: "none" }}
+        size="small"
+        variant="outlined"
         onClick={handleClickOpen}
+        startIcon={<EditIcon />}
       >
-        Add Event
+        Edit
       </Button>
       <Dialog
         onClose={handleClose}
@@ -58,7 +73,7 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
             sx={{ m: 0, p: 2, textAlign: "center" }}
             id="customized-dialog-title"
           >
-            Add Event
+            Edit Event
           </DialogTitle>
           <IconButton
             aria-label="close"
@@ -78,18 +93,21 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
                 adapterLocale="en-gb"
               >
                 <DatePicker
+                  defaultValue={Dayjs(formattedDate)}
                   required
                   label="When"
                   format="DD-MM-YYYY"
                   onChange={(value) => {
-                    setEvent({
-                      ...event,
+                    console.log("value", value);
+                    setEditEvent({
+                      ...editEvent,
                       recordDate: value.format("DD-MM-YYYY"),
                     });
                   }}
                 />
               </LocalizationProvider>
               <TextField
+                defaultValue={editEvent?.title}
                 required
                 id="outlined-basic"
                 label="Event Title"
@@ -99,10 +117,11 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
                 minRows={2}
                 helperText="What is the event?"
                 onChange={(e) => {
-                  setEvent({ ...event, title: e.target.value });
+                  setEditEvent({ ...editEvent, title: e.target.value });
                 }}
               />
               <TextField
+                defaultValue={editEvent?.description}
                 required
                 id="outlined-basic"
                 label="How"
@@ -112,7 +131,7 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
                 minRows={4}
                 helperText="Describe the event?"
                 onChange={(e) => {
-                  setEvent({ ...event, description: e.target.value });
+                  setEditEvent({ ...editEvent, description: e.target.value });
                 }}
               />
 
@@ -121,8 +140,9 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
               <div>
                 Self
                 <Switch
+                  checked={editEvent?.isPublic}
                   onChange={(e) => {
-                    setEvent({ ...event, isPublic: e.target.checked });
+                    setEditEvent({ ...editEvent, isPublic: e.target.checked });
                   }}
                   label="Event"
                 />
@@ -132,7 +152,7 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
           </DialogContent>
           <DialogActions>
             <Button autoFocus type="submit">
-              Save
+              Update
             </Button>
           </DialogActions>
         </form>
@@ -141,4 +161,4 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
   );
 };
 
-export default AddEvent;
+export default EditEvent;
