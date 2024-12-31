@@ -16,7 +16,7 @@ const Home = () => {
     title: "",
     description: "",
     isPublic: false,
-    userInfo: "test@gmail.com",
+    userInfo: "",
     recordDate: "",
     createdAt: "",
   });
@@ -26,8 +26,8 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true);
-
-    getEvents("?isPublic=false")
+const userInfo = localStorage.getItem("userInfo")
+    getEvents(`?userEmail=${userInfo}`)
       .then((result) => {
         console.log(result);
         setPrivateEvents(result?.events || []);
@@ -78,7 +78,19 @@ const Home = () => {
             {" "}
             <CircularProgress />
           </div>
-        ) : (
+        ) :
+        (privateEvents.length === 0)?
+          ( 
+<div style={{display:"flex", justifyContent:"center"}}>
+
+<div>
+            <p>You have no events, use Add Event to create.</p> 
+</div>
+</div>
+          )
+        : (
+
+          
           privateEvents.map((privateEvent) => {
             return (
               <Accordion

@@ -27,8 +27,12 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setOpen(false);
-    const addEvent = { ...event, createdAt: new Date().toString() };
+    const userInfo = localStorage.getItem("userInfo")
+    const addEvent = { ...event, createdAt: new Date().toString(),
+      userInfo
+     };
 
+    userInfo
     createEvent(addEvent)
       .then((response) => {
         if (!addEvent?.isPublic) {
