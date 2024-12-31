@@ -4,7 +4,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-
 const AccordionComponent = ({ item, actions }) => {
   return (
     <Accordion style={{ marginTop: "1em" }}>
@@ -16,6 +15,8 @@ const AccordionComponent = ({ item, actions }) => {
         {item?.title}
       </AccordionSummary>
       <AccordionDetails style={{ whiteSpace: "pre-line" }}>
+      
+
         <span>{item?.description}</span>
         <br />
         <br />
@@ -24,7 +25,6 @@ const AccordionComponent = ({ item, actions }) => {
           <i>Event Date: {item?.recordDate}</i>
         </div>
         <div>
-          
           <div style={{margin:"1em"}}>
             {actions&&actions}
           </div>

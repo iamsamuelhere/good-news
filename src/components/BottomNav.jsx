@@ -1,6 +1,6 @@
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-
+import { Link } from 'react-router';
 
 //icons
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -20,9 +20,18 @@ const BottomNav = ({value, setValue})=>{
         setValue(newValue);
       }}
     >
-      <BottomNavigationAction label="Home" icon={<HomeRoundedIcon />} />
-      <BottomNavigationAction label="Good News" icon={<FavoriteIcon />} />
       <BottomNavigationAction
+      LinkComponent={Link}
+      to="/home"
+      
+      label="Home" icon={<HomeRoundedIcon />} />
+      <BottomNavigationAction 
+        LinkComponent={Link}
+        to="/good-news"
+      label="Good News" icon={<FavoriteIcon />} />
+      <BottomNavigationAction
+        LinkComponent={Link}
+        to="/more"
         label="More"
         icon={<MoreHorizRoundedIcon />}
       />
