@@ -2,12 +2,13 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router";
 import { useState } from 'react'
+import Typography from '@mui/material/Typography';
 const Auth = () => {
     let navigate = useNavigate();
     const [email, setEmail] = useState("")
     return <div
-
     >
+
         <form
             style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh" }}
 
@@ -17,6 +18,9 @@ const Auth = () => {
                 navigate("/home");
             }}
         >
+            <Typography variant="h5" gutterBottom>
+        The Good News
+      </Typography>
 
             <TextField
                 required
