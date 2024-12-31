@@ -57,7 +57,8 @@ const EditEvent = ({ privateEvent, privateEvents, setPrivateEvents }) => {
       <Button
         style={{ marginRight: "1em", textTransform: "none" }}
         size="small"
-        variant="outlined"
+        variant="contained"
+      
         onClick={handleClickOpen}
         startIcon={<EditIcon />}
       >

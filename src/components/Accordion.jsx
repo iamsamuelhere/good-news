@@ -4,9 +4,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const AccordionComponent = ({ item, actions }) => {
+const AccordionComponent = ({ item, actions,backgroundColor}) => {
+  
   return (
-    <Accordion style={{ marginTop: "1em" }}>
+    <Accordion style={{ marginTop: "1em", border:`2px solid ${backgroundColor}`}}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"

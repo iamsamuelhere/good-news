@@ -35,11 +35,11 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
     userInfo
     createEvent(addEvent)
       .then((response) => {
-        if (!addEvent?.isPublic) {
+
           addEvent.id = response?.body?.id;
           console.log("ADDEVENT", addEvent);
           setPrivateEvents([...privateEvents, addEvent]);
-        }
+        
       })
       .catch();
   };

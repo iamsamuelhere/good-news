@@ -28,7 +28,7 @@ const DeleteModal = ({ title, description, content, events, setEvents }) => {
   return (
     <>
       <Button
-        variant="outlined"
+        variant="contained"
         size="small"
         color="error"
         style={{ textTransform: "none" }}
