@@ -12,7 +12,7 @@ import * as React from "react";
 const BottomNav = ({value, setValue})=>{
   // const ref = React.useRef(null);
 
-  return <div style={{position:"sticky", bottom:"0px", left:"0px", right:"0px", elevation:"3"}}>
+  return <div style={{position:"fixed", bottom:"0px", left:"0px", right:"0px", elevation:"3"}}>
     <BottomNavigation
       showLabels
       value={value}
