@@ -29,6 +29,7 @@ export default function App() {
     <div
       style={{
         display: "flex",
+        flexDirection:"column"
       }}
     >
       <div style={{ flex: 1 }}>
