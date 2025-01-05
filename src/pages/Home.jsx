@@ -24,8 +24,6 @@ const Home = ({user, setUser}) => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [privateEvents, setPrivateEvents] = useState([]);
-  const [open, setOpen] = useState(false);
-  const userInfo =JSON.parse(localStorage.getItem("userInfo"))
   useEffect(() => {
     setIsLoading(true);
     const userEmail = user?.email;
