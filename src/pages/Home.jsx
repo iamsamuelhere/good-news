@@ -18,7 +18,7 @@ const Home = ({user, setUser}) => {
     title: "",
     description: "",
     isPublic: false,
-    userInfo: "",
+    userInfo: user?.email,
     recordDate: "",
     createdAt: "",
   });

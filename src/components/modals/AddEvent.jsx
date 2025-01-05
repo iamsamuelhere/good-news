@@ -28,11 +28,8 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
     e.preventDefault();
     setOpen(false);
     const userInfo = localStorage.getItem("userInfo")
-    const addEvent = { ...event, createdAt: new Date().toString(),
-      userInfo
-     };
+    const addEvent = { ...event, createdAt: new Date().toString()};
 
-    userInfo
     createEvent(addEvent)
       .then((response) => {
 
