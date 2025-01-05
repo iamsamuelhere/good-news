@@ -4,7 +4,7 @@ import AddEvent from "../components/modals/AddEvent";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 import Accordion from "../components/Accordion";
-const VITE_test = import.meta.env.VITE_test;
+
 import getEvents from "../api/getEvents";
 
 import DeleteModal from "../components/modals/DeleteModal";
@@ -12,7 +12,8 @@ import Card from "@mui/material/Card";
 
 import EditModal from "../components/modals/EditEvent";
 
-const Home = () => {
+const Home = ({user, setUser}) => {
+  console.log("Home user", user )
   const [event, setEvent] = useState({
     title: "",
     description: "",
@@ -24,11 +25,11 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [privateEvents, setPrivateEvents] = useState([]);
   const [open, setOpen] = useState(false);
-
+  const userInfo =JSON.parse(localStorage.getItem("userInfo"))
   useEffect(() => {
     setIsLoading(true);
-    const userInfo = localStorage.getItem("userInfo")
-    getEvents(`?userEmail=${userInfo}`)
+    const userEmail = user?.email;
+    getEvents(`?userEmail=${userEmail}`)
       .then((result) => {
         console.log(result);
         setPrivateEvents(result?.events || []);
@@ -48,7 +49,7 @@ const Home = () => {
             textAlign: "center",
           }}
         >
-          Dear, child of God!!
+         Dear <b>{user?.displayName||""}</b>, child of God!!
         </p>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -66,6 +67,7 @@ const Home = () => {
       <Paper
         elevation={1}
         style={{
+          zIndex:"1",
           height: "70vh",
           padding: "1em",
           margin: "1em",

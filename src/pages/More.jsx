@@ -1,7 +1,10 @@
 import {useNavigate} from 'react-router'
-
-const More = ()=>{
+import {auth} from "../services/firebase"
+import Button from "@mui/material/Button";
+const More = ({user, setUser})=>{
   const navigate = useNavigate();
+
+  
   return <div
   style={{
     height: "70vh",
@@ -12,14 +15,25 @@ const More = ()=>{
   
   >
   <h1>More</h1>
-  {localStorage.getItem("userInfo")}<br/>
-  <button
-  onClick={()=>{
-    localStorage.removeItem("userInfo")
-    navigate("/")
-  }}
-  
-  >Logout</button>
+  <img src={user?.photoURL} alt="Profile pic"
+  style={{borderRadius:"50%"}}
+  /><br/>
+  {user?.email}<br/>
+
+
+<Button autoFocus
+                style={{ margin: "2em" }}
+                variant="contained"
+                onClick={()=>{
+                  auth.signOut().then((res)=>{
+                    console.log("signout", res)
+                    navigate("/")
+                  })
+              
+                }}
+            >
+                Logout
+            </Button>
   </div>
 }
 
