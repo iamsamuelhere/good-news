@@ -41,7 +41,7 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
       .catch();
   };
   return (
-    <div style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center", margin:"10px" }}>
       <Button
         variant="contained"
         startIcon={<AddRoundedIcon />}

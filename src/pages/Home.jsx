@@ -62,6 +62,12 @@ const Home = ({user, setUser}) => {
           So God created man in His own image; in the image of God. He created him; male and female He created them.
         </Card>
       </div>
+      <AddEvent
+          event={event}
+          setEvent={setEvent}
+          privateEvents={privateEvents}
+          setPrivateEvents={setPrivateEvents}
+        />
       <Paper
         elevation={1}
         style={{
@@ -72,12 +78,7 @@ const Home = ({user, setUser}) => {
           overflowY: "scroll",
         }}
       >
-        <AddEvent
-          event={event}
-          setEvent={setEvent}
-          privateEvents={privateEvents}
-          setPrivateEvents={setPrivateEvents}
-        />
+        
         {isLoading ? (
           <div
             style={{
