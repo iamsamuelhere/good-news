@@ -1,16 +1,15 @@
-import TextField from "@mui/material/TextField";
+
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from 'react'
 import Typography from '@mui/material/Typography';
 
-import { signInWithPopup, getAuth } from 'firebase/auth'
+import { signInWithPopup } from 'firebase/auth'
 import { auth, googleProvider } from '../services/firebase'
 
 const Auth = ({user, setUser}) => {
     console.log("in auth user", user)
     let navigate = useNavigate();
-    const [email, setEmail] = useState("")
   
     const handleSignin = async () => {
         try {
@@ -38,7 +37,7 @@ const Auth = ({user, setUser}) => {
 
           
 
-            <Button autoFocus
+            <Button
                 style={{ margin: "2em" }}
                 variant="contained"
                 onClick={handleSignin}

@@ -15,7 +15,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import createEvent from "../../api/createEvent";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
+import {isModerator} from '../../helpers/helper'
+const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents, user }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -40,6 +41,9 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
       })
       .catch();
   };
+
+
+
   return (
     <div style={{ textAlign: "center", margin:"10px" }}>
       <Button
@@ -74,22 +78,7 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
           </IconButton>
           <DialogContent dividers>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <LocalizationProvider
-                dateAdapter={AdapterDayjs}
-                adapterLocale="en-gb"
-              >
-                <DatePicker
-                  required
-                  label="When"
-                  format="DD-MM-YYYY"
-                  onChange={(value) => {
-                    setEvent({
-                      ...event,
-                      recordDate: value.format("DD-MM-YYYY"),
-                    });
-                  }}
-                />
-              </LocalizationProvider>
+           
               <TextField
                 required
                 id="outlined-basic"
@@ -116,19 +105,38 @@ const AddEvent = ({ event, setEvent, privateEvents, setPrivateEvents }) => {
                   setEvent({ ...event, description: e.target.value });
                 }}
               />
-
-              <p>Add Note to: </p>
-
-              <div>
-                Self
-                <Switch
-                  onChange={(e) => {
-                    setEvent({ ...event, isPublic: e.target.checked });
+   <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="en-gb"
+              >
+                <DatePicker
+                  required
+                  label="When"
+                  format="DD-MM-YYYY"
+                  onChange={(value) => {
+                    setEvent({
+                      ...event,
+                      recordDate: value.format("DD-MM-YYYY"),
+                    });
                   }}
-                  label="Event"
                 />
-                Others
-              </div>
+              </LocalizationProvider>
+              {isModerator(user)?<>
+                <p>Add Note to: </p>
+
+<div>
+  Self
+  <Switch
+    onChange={(e) => {
+      setEvent({ ...event, isPublic: e.target.checked });
+    }}
+    label="Event"
+  />
+  Others
+</div>
+              
+              </>:<></>}
+              
             </div>
           </DialogContent>
           <DialogActions>

@@ -16,9 +16,9 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 Dayjs.locale("en-gb");
-
+import { isModerator } from '../../helpers/helper'
 import updateEvent from "../../api/updateEvent";
-const EditEvent = ({ privateEvent, privateEvents, setPrivateEvents }) => {
+const EditEvent = ({ privateEvent, privateEvents, setPrivateEvents, user }) => {
   const [open, setOpen] = React.useState(false);
 
   const [editEvent, setEditEvent] = React.useState(privateEvent);
@@ -58,7 +58,7 @@ const EditEvent = ({ privateEvent, privateEvents, setPrivateEvents }) => {
         style={{ marginRight: "1em", textTransform: "none" }}
         size="small"
         variant="contained"
-      
+
         onClick={handleClickOpen}
         startIcon={<EditIcon />}
       >
@@ -89,24 +89,7 @@ const EditEvent = ({ privateEvent, privateEvents, setPrivateEvents }) => {
           </IconButton>
           <DialogContent dividers>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <LocalizationProvider
-                dateAdapter={AdapterDayjs}
-                adapterLocale="en-gb"
-              >
-                <DatePicker
-                  defaultValue={Dayjs(formattedDate)}
-                  required
-                  label="When"
-                  format="DD-MM-YYYY"
-                  onChange={(value) => {
-                    console.log("value", value);
-                    setEditEvent({
-                      ...editEvent,
-                      recordDate: value.format("DD-MM-YYYY"),
-                    });
-                  }}
-                />
-              </LocalizationProvider>
+
               <TextField
                 defaultValue={editEvent?.title}
                 required
@@ -135,20 +118,44 @@ const EditEvent = ({ privateEvent, privateEvents, setPrivateEvents }) => {
                   setEditEvent({ ...editEvent, description: e.target.value });
                 }}
               />
-
-              <p>Add Note to: </p>
-
-              <div>
-                Self
-                <Switch
-                  checked={editEvent?.isPublic}
-                  onChange={(e) => {
-                    setEditEvent({ ...editEvent, isPublic: e.target.checked });
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="en-gb"
+              >
+                <DatePicker
+                  defaultValue={Dayjs(formattedDate)}
+                  required
+                  label="When"
+                  format="DD-MM-YYYY"
+                  onChange={(value) => {
+                    console.log("value", value);
+                    setEditEvent({
+                      ...editEvent,
+                      recordDate: value.format("DD-MM-YYYY"),
+                    });
                   }}
-                  label="Event"
                 />
-                Others
-              </div>
+              </LocalizationProvider>
+
+              {
+                isModerator(user) ?
+                  <>
+                    <p>Add Note to: </p>
+                    <div>
+                      Self
+                      <Switch
+                        checked={editEvent?.isPublic}
+                        onChange={(e) => {
+                          setEditEvent({ ...editEvent, isPublic: e.target.checked });
+                        }}
+                        label="Event"
+                      />
+                      Others
+                    </div>
+                  </>
+
+                  : <></>
+              }
             </div>
           </DialogContent>
           <DialogActions>

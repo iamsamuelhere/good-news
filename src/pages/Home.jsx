@@ -39,7 +39,7 @@ const Home = ({user, setUser}) => {
   }, []);
 
   return (
-    <>
+    <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <p
           style={{
@@ -56,26 +56,26 @@ const Home = ({user, setUser}) => {
           style={{
             fontSize: "1em",
             padding: "0.5em",
-
           }}
         >
           So God created man in His own image; in the image of God. He created him; male and female He created them.
         </Card>
       </div>
+      
       <AddEvent
           event={event}
           setEvent={setEvent}
           privateEvents={privateEvents}
           setPrivateEvents={setPrivateEvents}
+          user={user}
         />
       <Paper
         elevation={1}
         style={{
-          zIndex:"1",
-          height: "70vh",
-          padding: "1em",
-          margin: "1em",
+          padding: "1.2em",
           overflowY: "scroll",
+          margin:"1em",
+          height:"50vh"
         }}
       >
         
@@ -119,6 +119,7 @@ const Home = ({user, setUser}) => {
                             setEvent={setEvent}
                             privateEvents={privateEvents}
                             setPrivateEvents={setPrivateEvents}
+                            user={user}
                           />
                           <DeleteModal
                             events={privateEvents}
@@ -135,7 +136,7 @@ const Home = ({user, setUser}) => {
               })
             )}
       </Paper>
-    </>
+    </div>
   );
 };
 
